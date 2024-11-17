@@ -1,0 +1,32 @@
+@startuml Diagrama C2
+set separator none
+title Sistema de Chatbot Universitario - Containers
+
+left to right direction
+
+!include <C4/C4>
+!include <C4/C4_Context>
+!include <C4/C4_Container>
+
+System(AnythingLLM, "Anything LLM", $descr="Sistema local para procesamiento de lenguaje natural.", $tags="", $link="")
+Person(Estudiante, "Estudiante", $descr="", $tags="", $link="")
+Person(Docente, "Docente", $descr="", $tags="", $link="")
+Person(PersonalAdministrativo, "Personal Administrativo", $descr="", $tags="", $link="")
+Person(Administrador, "Administrador", $descr="", $tags="", $link="")
+
+System_Boundary("SistemadeChatbotUniversitario_boundary", "Sistema de Chatbot Universitario", $tags="") {
+  Container(SistemadeChatbotUniversitario.FrontendReact, "Frontend (React)", $techn="React Application", $descr="Interfaz gráfica para que los usuarios interactúen con el chatbot.", $tags="", $link="")
+  Container(SistemadeChatbotUniversitario.BackendSpringBoot, "Backend (Spring Boot)", $techn="Spring Boot Application", $descr="Procesa las solicitudes y conecta con Anything LLM.", $tags="", $link="")
+  ContainerDb(SistemadeChatbotUniversitario.BasedeDatosPostgreSQL, "Base de Datos (PostgreSQL)", $techn="PostgreSQL", $descr="Almacena estadísticas y datos relacionados al chatbot.", $tags="", $link="")
+}
+
+Rel(Estudiante, SistemadeChatbotUniversitario.FrontendReact, "Consulta reglamentos, calendario y trámites.", $techn="", $tags="", $link="")
+Rel(Docente, SistemadeChatbotUniversitario.FrontendReact, "Consulta reglamentos y fechas académicas.", $techn="", $tags="", $link="")
+Rel(PersonalAdministrativo, SistemadeChatbotUniversitario.FrontendReact, "Consulta datos administrativos.", $techn="", $tags="", $link="")
+Rel(Administrador, SistemadeChatbotUniversitario.BackendSpringBoot, "Actualiza datos del chatbot.", $techn="", $tags="", $link="")
+Rel(SistemadeChatbotUniversitario.FrontendReact, SistemadeChatbotUniversitario.BackendSpringBoot, "Envía consultas.", $techn="", $tags="", $link="")
+Rel(SistemadeChatbotUniversitario.BackendSpringBoot, AnythingLLM, "Procesa consultas con documentos cargados.", $techn="", $tags="", $link="")
+Rel(SistemadeChatbotUniversitario.BackendSpringBoot, SistemadeChatbotUniversitario.BasedeDatosPostgreSQL, "Guarda estadísticas de uso.", $techn="", $tags="", $link="")
+
+SHOW_LEGEND(true)
+@enduml

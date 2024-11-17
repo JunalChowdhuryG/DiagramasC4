@@ -1,0 +1,36 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+title Sistema de Chatbot Universitario - Contenedores con Propiedades
+
+' Definir el encabezado de las propiedades
+SetPropertyHeader("Propiedad", "Valor", "Descripción")
+
+Person(usuario, "Usuario del sistema", "Persona que interactúa con el chatbot")
+AddProperty("Tipo", "Humano", "Persona real que utiliza el sistema")
+AddProperty("Frecuencia", "Alta", "Interacciones frecuentes con el sistema")
+
+Container(webApp, "Chatbot Web App", "Angular", "Frontend que permite a los usuarios interactuar con el sistema")
+AddProperty("Tecnología", "Angular", "Framework para construir aplicaciones web dinámicas")
+AddProperty("Responsable", "Equipo Frontend", "Equipo encargado del desarrollo del frontend")
+
+Container(api, "Backend (Spring Boot)", "Spring Boot", "Gestiona la lógica de negocio y coordina las interacciones")
+AddProperty("Tecnología", "Spring Boot", "Framework para construir servicios RESTful")
+AddProperty("Responsable", "Equipo Backend", "Equipo encargado del desarrollo del backend")
+AddProperty("Seguridad", "OAuth2", "Autenticación segura basada en tokens")
+
+ContainerDb(db, "Base de Datos", "PostgreSQL", "Almacena datos de uso y estadísticas")
+AddProperty("Tecnología", "PostgreSQL", "Sistema de gestión de bases de datos relacionales")
+AddProperty("Cifrado", "AES-256", "Cifrado de datos sensibles")
+
+System_Ext(llm, "Anything LLM", "Procesa consultas mediante procesamiento de lenguaje natural")
+AddProperty("Versión", "1.3.5", "Versión del modelo LLM utilizado")
+AddProperty("Implementación", "Local", "Instalación local para mayor seguridad")
+
+Rel(usuario, webApp, "Usa")
+Rel(webApp, api, "Envía solicitudes")
+Rel(api, db, "Lee y escribe datos")
+Rel(api, llm, "Envía consultas procesadas y recibe respuestas")
+
+SHOW_LEGEND()
+@enduml

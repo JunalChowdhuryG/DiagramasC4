@@ -1,0 +1,26 @@
+@startuml Diagrama C1
+set separator none
+title Sistema de Chatbot Universitario - System Context
+
+left to right direction
+
+!include <C4/C4>
+!include <C4/C4_Context>
+
+Person(Estudiante, "Estudiante", $descr="", $tags="", $link="")
+Person(Docente, "Docente", $descr="", $tags="", $link="")
+Person(PersonalAdministrativo, "Personal Administrativo", $descr="", $tags="", $link="")
+Person(Administrador, "Administrador", $descr="", $tags="", $link="")
+System(SistemadeChatbotUniversitario, "Sistema de Chatbot Universitario", $descr="Asistente virtual que responde preguntas relacionadas con la vida académica.", $tags="", $link="")
+System(PortalORCEIntralu, "Portal ORCE/Intralu", $descr="Portal académico para acceder al chatbot.", $tags="", $link="")
+System(AnythingLLM, "Anything LLM", $descr="Sistema de procesamiento de lenguaje natural basado en documentos cargados localmente.", $tags="", $link="")
+
+Rel(PersonalAdministrativo, SistemadeChatbotUniversitario, "Consulta datos administrativos y reglamentos.", $techn="", $tags="", $link="")
+Rel(Administrador, SistemadeChatbotUniversitario, "Actualiza documentos y verifica funcionalidad.", $techn="", $tags="", $link="")
+Rel(SistemadeChatbotUniversitario, AnythingLLM, "Envía consultas para procesar lenguaje natural.", $techn="", $tags="", $link="")
+Rel(SistemadeChatbotUniversitario, PortalORCEIntralu, "Se integra para acceso al chatbot.", $techn="", $tags="", $link="")
+Rel(Estudiante, SistemadeChatbotUniversitario, "Consulta reglamentos, trámites y calendario.", $techn="", $tags="", $link="")
+Rel(Docente, SistemadeChatbotUniversitario, "Consulta trámites, reglamentos y fechas académicas.", $techn="", $tags="", $link="")
+
+SHOW_LEGEND(true)
+@enduml
