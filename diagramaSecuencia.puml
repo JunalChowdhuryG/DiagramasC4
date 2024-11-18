@@ -1,0 +1,87 @@
+@startuml
+actor Usuario
+actor Administrador
+actor "Interfaz de Usuario (Web/Móvil)" as InterfazUsuario
+participant "Backend del Chatbot" as BackendChatbot
+participant "ChatService" as ChatService
+participant "Anything LLM" as LLM
+participant "Motor de Búsqueda" as MotorBusqueda
+participant "Base de Conocimiento" as BaseConocimiento
+participant "Sistema Externo" as SistemaExterno
+participant "Módulo de Entrenamiento" as TrainingModule
+participant "Estadísticas de Uso" as UsageStats
+
+== Caso de Uso 1: Ingresar a la Plataforma ==
+Usuario -> InterfazUsuario: Ingresar a la plataforma
+InterfazUsuario --> Usuario: Mostrar pantalla principal
+
+== Caso de Uso 2: Consulta de Reglamentos ==
+Usuario -> InterfazUsuario: Consultar reglamento
+InterfazUsuario -> BackendChatbot: Enviar consulta de reglamento
+BackendChatbot -> ChatService: Procesar consulta
+ChatService -> LLM: Procesar lenguaje natural
+LLM --> ChatService: Intención identificada
+ChatService -> MotorBusqueda: Buscar reglamento
+MotorBusqueda -> BaseConocimiento: Obtener reglamento
+BaseConocimiento --> MotorBusqueda: Enviar reglamento encontrado
+MotorBusqueda --> ChatService: Devolver datos del reglamento
+ChatService --> BackendChatbot: Enviar respuesta con reglamento
+BackendChatbot --> InterfazUsuario: Mostrar reglamento
+InterfazUsuario --> Usuario: Presentar información
+
+== Caso de Uso 3: Consulta de Calendario Académico ==
+Usuario -> InterfazUsuario: Consultar calendario académico
+InterfazUsuario -> BackendChatbot: Enviar consulta de calendario
+BackendChatbot -> ChatService: Procesar consulta
+ChatService -> LLM: Procesar lenguaje natural
+LLM --> ChatService: Intención identificada
+ChatService -> MotorBusqueda: Buscar calendario académico
+MotorBusqueda -> BaseConocimiento: Obtener calendario
+BaseConocimiento --> MotorBusqueda: Enviar calendario
+MotorBusqueda --> ChatService: Devolver datos del calendario
+ChatService --> BackendChatbot: Enviar respuesta con calendario
+BackendChatbot --> InterfazUsuario: Mostrar calendario
+InterfazUsuario --> Usuario: Presentar información
+
+== Caso de Uso 4: Guía de Trámites Administrativos ==
+Usuario -> InterfazUsuario: Consultar guía de trámites
+InterfazUsuario -> BackendChatbot: Enviar consulta de trámite
+BackendChatbot -> ChatService: Procesar consulta
+ChatService -> LLM: Procesar lenguaje natural
+LLM --> ChatService: Intención identificada
+ChatService -> MotorBusqueda: Buscar guía de trámite
+MotorBusqueda -> BaseConocimiento: Obtener guía de trámites
+BaseConocimiento --> MotorBusqueda: Enviar guía
+MotorBusqueda --> ChatService: Devolver datos de trámite
+ChatService --> BackendChatbot: Enviar respuesta con guía
+BackendChatbot --> InterfazUsuario: Mostrar guía
+InterfazUsuario --> Usuario: Presentar información
+
+== Caso de Uso 8: Consulta Irrelevante (Fuera de Alcance) ==
+Usuario -> InterfazUsuario: Realizar consulta irrelevante
+InterfazUsuario -> BackendChatbot: Enviar consulta
+BackendChatbot -> ChatService: Procesar consulta
+ChatService -> LLM: Procesar lenguaje natural
+LLM --> ChatService: Intención no identificada
+ChatService --> BackendChatbot: Indicar que la consulta no está en el alcance
+BackendChatbot --> InterfazUsuario: Mostrar mensaje
+InterfazUsuario --> Usuario: Mostrar error de alcance
+
+== Caso de Uso 9: Entrenar al Chatbot ==
+Administrador -> TrainingModule: Entrenar con nuevos datos
+TrainingModule -> BackendChatbot: Actualizar conocimiento
+BackendChatbot -> BaseConocimiento: Almacenar nuevos datos y reglas
+
+== Caso de Uso 10: Revisar Consultas Comunes ==
+Administrador -> UsageStats: Obtener estadísticas
+UsageStats --> Administrador: Enviar datos de consultas comunes
+
+== Caso de Uso 11: Gestionar Usuarios ==
+Administrador -> InterfazUsuario: Gestionar usuarios
+InterfazUsuario --> Administrador: Confirmación de gestión
+
+== Caso de Uso 12: Monitorizar el Rendimiento del Chatbot ==
+Administrador -> UsageStats: Revisar métricas
+UsageStats --> Administrador: Enviar métricas de rendimiento
+
+@enduml
