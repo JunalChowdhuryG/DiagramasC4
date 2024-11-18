@@ -1,0 +1,27 @@
+@startuml
+
+class Usuario {
+    +id: int
+    +nombre: String
+    +tipo: String <<enumeration>> // estudiante, docente, administrativo
+}
+
+class Consulta {
+    +id: int
+    +fecha: Date
+    +mensaje: String
+    +respuesta: String
+    +usuarioId: int
+}
+
+class Documento {
+    +id: int
+    +titulo: String
+    +contenido: String
+    +tipo: String <<enumeration>> // reglamento, calendario
+}
+
+Usuario "1" --> "N" Consulta : realiza
+Consulta "1" --> "1" Documento : referencia
+
+@enduml
