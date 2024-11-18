@@ -1,0 +1,17 @@
+@startuml
+skinparam linetype ortho
+
+package "Subsistemas Externos" {
+    [Portal Académico ORCE/Intralu]
+    [Sistemas de Documentación Universitaria]
+}
+
+package "Chatbot Universitario" {
+    [Frontend] --> [Backend]
+    [Backend] --> [Anything LLM] : Procesamiento de lenguaje
+}
+
+[Backend] --> [Portal Académico ORCE/Intralu] : Consultar datos
+[Backend] --> [Sistemas de Documentación Universitaria] : Obtener reglamentos
+
+@enduml
